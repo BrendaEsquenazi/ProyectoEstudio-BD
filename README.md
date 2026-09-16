@@ -1,11 +1,14 @@
 # ProyectoEstudio-BD
 
-Nombre del equipo: Equipo 01
 Integrantes:
 Azula, Iara Elizabeth DNI: 42.753.256
+
 Esquenazi, Brenda DNI: 43.822.753
+
 Fernandez Gomez, Gonzalo DNI: 46.245.096
+
 Franco, Lucas DNI: 46.243.358
+
 Galeano, Paulina. DNI: 45.097.063
 
 Título del tema: Diseño e implementación de una base de datos para una plataforma e-commerce de venta y gestión de indumentaria
@@ -13,14 +16,16 @@ Título del tema: Diseño e implementación de una base de datos para una plataf
 
 Descripción completa del caso
 El proyecto se centra en un e-commerce de indumentaria femenina y masculina. El negocio busca digitalizar y optimizar sus canales de comercialización a través de una plataforma web que permita a los clientes consultar un catálogo clasificado por categorías y talles, registrarse como usuarios, gestionar un carrito de compras y concretar pedidos con diversos medios de pago. Paralelamente, el sistema proporciona al equipo de administración herramientas para controlar el inventario en tiempo real, actualizar precios de catálogo sin alterar órdenes históricas y auditar transacciones.
+
 Alcance del sistema
-Dentro del alcance:
+
 Módulo de Clientes: Registro de usuarios, autenticación, gestión de datos personales y direcciones de envío.
 Módulo de Catálogo y Productos: Consulta de prendas por categoría/talle y disponibilidad.
 Módulo de Pedidos y Ventas: Gestión del carrito, confirmación de compra y emisión de órdenes de pedido detalladas.
 Módulo de Stock: Descuento automático de unidades tras la confirmación del pago y alertas por bajo stock.
 Módulo de Pagos: Registro de transacciones con múltiples medios de pago (tarjeta de crédito/débito, transferencia bancaria, pasarelas de pago virtuales).
 Módulo de consultas: Asesoramiento respecto a talles y/o cualquier otra consulta.
+
 Fuera del alcance:
 Seguimiento en tiempo real por GPS de envíos logísticos (se gestiona mediante enlaces externos provistos por correos terceros).
 Facturación fiscal integrada con webservices gubernamentales (AFIP u homólogos), limitándose al registro interno de comprobantes de venta.
