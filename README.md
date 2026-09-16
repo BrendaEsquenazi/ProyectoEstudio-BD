@@ -2,8 +2,7 @@
 
 Integrantes:
 Azula, Iara Elizabeth DNI: 42.753.256
-
-//Esquenazi, Brenda DNI: 43.822.753
+Esquenazi, Brenda DNI: 43.822.753
 
 Fernandez Gomez, Gonzalo DNI: 46.245.096
 
