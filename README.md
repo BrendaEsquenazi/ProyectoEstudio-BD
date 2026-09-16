@@ -7,6 +7,7 @@ Esquenazi, Brenda DNI: 43.822.753
 Fernandez Gomez, Gonzalo DNI: 46.245.096
 Franco, Lucas DNI: 46.243.358
 Galeano, Paulina. DNI: 45.097.063
+
 Título del tema: Diseño e implementación de una base de datos para una plataforma e-commerce de venta y gestión de indumentaria
 
 
