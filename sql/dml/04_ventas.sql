@@ -1,3 +1,6 @@
+USE EcommerceInd;
+GO
+
 INSERT INTO metodo_pago (id_metodo, descripcion) VALUES 
 (1, 'Tarjeta de Crédito Visa'),
 (2, 'Tarjeta de Débito Mastercard'),

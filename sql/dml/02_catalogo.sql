@@ -1,4 +1,4 @@
-USE sistema_ventas;
+USE EcommerceInd;
 GO
 
 -- Tabla CATEGORIA (10 registros)
