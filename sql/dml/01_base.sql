@@ -20,7 +20,10 @@ INSERT INTO rol (id_rol, descripcion) VALUES
 (2, 'Cliente'),
 (3, 'Vendedor'),
 (4, 'Gerente'),
-(5, 'Soporte');
+(5, 'Soporte'),
+(6, 'Encargado de depósito'),
+(7, 'Encargado de compras'),
+(8, 'Atención al cliente');
 
 -- 3. Inserción en USUARIO 
 INSERT INTO usuario (id_usuario, nombre, apellido, dni, email, contrasena, telefono, id_rol, id_direccion) VALUES
