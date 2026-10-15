@@ -49,7 +49,7 @@ La consulta devuelve una fila por cada categoría que tenga ventas coincidentes 
 
 El resultado permite comparar el desempeño comercial de las categorías durante el período consultado.
 
-### 4. Validacion de Importes de Venta y Pagos Asociados
+## 4. Validacion de Importes de Venta y Pagos Asociados
 **Archivo SQL:** `sql/consultas/04_validacion_ventas_pagos.sql`
 
 ### Objetivo
