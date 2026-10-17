@@ -185,3 +185,47 @@ Proveer métricas analíticas sobre el comportamiento de compra de los usuarios 
 - **Objetivo:** Identificar desde qué provincias y ciudades provienen la mayor cantidad de ventas e ingresos del e-commerce. Esta información permite negociar mejores tarifas de envío con correos para las zonas más calientes o dirigir publicidad a las regiones con menos ventas.
 - **Precondición:** Los usuarios tienen domicilios registrados y ventas asociadas.
 - **Resultado esperado:** Un listado agrupado por provincia y ciudad, mostrando la cantidad de pedidos entregados en cada zona y el total de dinero recaudado, ordenado de mayor a menor ingreso.
+
+## 6. Análisis de Compras y Proveedores
+
+**Archivo SQL:** `sql/consultas/06_analisis_compras_proveedores.sql`
+
+### Objetivo
+Analizar las compras realizadas a cada proveedor, las cantidades de productos repuestas y los importes asociados. Las consultas excluyen las compras canceladas; consideran tanto las completadas como las pendientes para reflejar las reposiciones ejecutadas y comprometidas.
+
+### Estrategia SQL utilizada
+- **INNER JOIN:** relaciona compras, proveedores, detalles y variantes para presentar información descriptiva de cada renglón.
+- **LEFT JOIN:** conserva en el resumen a los proveedores que todavía no tienen compras no canceladas.
+- **SUM:** calcula las unidades repuestas y el importe mediante `cantidad * precio_unitario`.
+- **COUNT(DISTINCT):** cuenta compras sin duplicarlas por tener varios renglones.
+- **GROUP BY:** consolida los datos por proveedor o por proveedor y variante, según el análisis.
+- **COALESCE:** muestra cero en los totales de proveedores sin compras asociadas.
+- **WHERE / condición de JOIN:** excluye el estado `Cancelada`; la condición del resumen se aplica en el `JOIN` para no eliminar proveedores sin compras.
+- **ORDER BY:** prioriza los mayores importes de reposición.
+
+### 6.1 Caso de Uso 1: Consulta Detallada de Compras por Proveedor
+- **Identificador:** CU-COM-01
+- **Nombre:** Revisión de renglones de compra y costo de reposición.
+- **Actor:** Responsable de Compras / Administración.
+- **Objetivo:** Consultar cada producto y variante adquiridos, junto con proveedor, fecha, estado, cantidad, precio unitario e importe por renglón.
+- **Precondición:** Existen compras con sus detalles y las variantes relacionadas están registradas.
+- **Consulta SQL asociada:** Consulta 1.
+- **Resultado esperado:** Una fila por detalle de compra no cancelada; el importe de cada renglón corresponde a la cantidad multiplicada por el precio unitario.
+
+### 6.2 Caso de Uso 2: Comparación de Compras entre Proveedores
+- **Identificador:** CU-COM-02
+- **Nombre:** Resumen de unidades e importes por proveedor.
+- **Actor:** Responsable de Compras / Gerencia.
+- **Objetivo:** Comparar cuántas compras, unidades e importes de reposición corresponden a cada proveedor.
+- **Precondición:** Los proveedores están registrados; puede haber proveedores sin compras.
+- **Consulta SQL asociada:** Consulta 2.
+- **Resultado esperado:** Una fila por proveedor, ordenada por importe de reposición descendente. Los proveedores sin compras no canceladas aparecen con cantidades e importe en cero.
+
+### 6.3 Caso de Uso 3: Análisis de Reposición por Variante
+- **Identificador:** CU-COM-03
+- **Nombre:** Identificación de productos y variantes repuestos por proveedor.
+- **Actor:** Responsable de Inventario / Compras.
+- **Objetivo:** Determinar las cantidades e importes comprados por proveedor para cada combinación de producto, talle y color, y contrastarlos con el stock actual.
+- **Precondición:** Existen detalles de compra vinculados a variantes de producto.
+- **Consulta SQL asociada:** Consulta 3.
+- **Resultado esperado:** Una fila por proveedor y variante con el número de compras, unidades repuestas, importe acumulado y stock actual; los resultados se ordenan priorizando los mayores importes.
