@@ -1,0 +1,29 @@
+## Tema Tecnico 2: Manejo de Transacciones y Control de Concurrencia
+
+**Responsable:** Brenda  
+**Archivo SQL:** `sql/tecnico/02_transacciones_ventas.sql`
+
+### 1. Definicion y Objetivo
+Una Transaccion es una unidad logica de procesamiento en SQL Server que agrupa un conjunto de sentencias DML (INSERT, UPDATE, DELETE), garantizando que se ejecuten bajo el principio de "todo o nada" respetando las propiedades ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad).  
+**Objetivo:** Garantizar la atomicidad y la coherencia del negocio durante el registro de pedidos de indumentaria, asegurando que la creacion de la orden y el descuento de stock se consoliden de forma conjunta o se reviertan totalmente ante un fallo.
+
+### 2. Ventajas y Aplicaciones
+- **Atomicidad Absoluta:** Asegura que si falla la insercion de los detalles o la cabecera, no se descuente stock de forma huerfana en el inventario.
+- **Control Estructurado de Errores:** Permite capturar fallos mediante bloques TRY...CATCH y forzar un ROLLBACK inmediato, evitando estados intermedios o inconsistentes.
+- **Integridad Contable y de Stock:** Impide discrepancias financieras entre lo facturado al cliente y la mercaderia disponible en las sucursales.
+
+### 3. Implementacion en SQL Server Express
+Se utilizaron dos estrategias del motor:
+1. **Bloque Transaccional Explicito:** Uso de `BEGIN TRANSACTION` para iniciar la unidad de trabajo y `COMMIT TRANSACTION` para confirmar los cambios persistidos en el log[cite: 9].
+2. **Control y Reversion con TRY...CATCH:** Captura de excepciones en tiempo de ejecucion; en el bloque `CATCH` se evalua `@@TRANCOUNT > 0` y se ejecuta `ROLLBACK TRANSACTION` para restaurar el estado original.
+
+### 4. Caso Concreto Aplicado al Sistema de Ventas
+- **Tablas Modificadas:** `Venta_Cabecera` (INSERT de cabecera de pedido) y `Venta_Detalle` (INSERT de lineas de prendas).
+- **Tabla Actualizada:** `Variante_Producto` (UPDATE del stock disponible).
+
+### 5. Resultados Obtenidos
+
+| Operacion Evaluada | Instruccion SQL | Comportamiento Esperado | Resultado en SQL Server |
+| :--- | :--- | :--- | :--- |
+| Registro Exitoso de Venta con Descuento de Stock | `BEGIN TRY BEGIN TRAN; INSERT INTO Venta_Cabecera ...; INSERT INTO Venta_Detalle ...; UPDATE Variante_Producto SET stock = stock - 2 ...; COMMIT TRAN; END TRY ...` | Insertar la cabecera, registrar el detalle y descontar 2 unidades de stock de la variante de forma sincronizada. | Exitoso. Se registraron los comprobantes 101 y 201, y el stock de la variante 1 se actualizo de 50 a 48 unidades de manera persistente. |
+| Falla Provocada por Clave Foranea Inexistente | `BEGIN TRY BEGIN TRAN; UPDATE Variante_Producto SET stock = stock - 5 ...; INSERT INTO Venta_Cabecera (..., id_usuario) VALUES (..., 9999); COMMIT TRAN; END TRY BEGIN CATCH ROLLBACK TRAN; END CATCH` | El motor detecta la violacion de FK_VentaCabecera_Usuario, activa el bloque CATCH y ejecuta ROLLBACK, cancelando el descuento de stock previo. | Exitoso. Transaccion abortada con error de clave foranea; no se crearon registros de venta y el stock no sufrio alteraciones (permanecio en 48 unidades). |
