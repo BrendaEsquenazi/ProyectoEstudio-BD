@@ -43,8 +43,8 @@ BEGIN
         SELECT 
             d.id_producto, 
             d.descripcion, 
-            d.precio AS precio_anterior, 
-            i.precio AS precio_nuevo, 
+            d.precio_unitario AS precio_anterior, 
+            i.precio_unitario AS precio_nuevo, 
             'UPDATE', 
             GETDATE(), 
             SYSTEM_USER
@@ -67,7 +67,7 @@ BEGIN
         SELECT 
             d.id_producto, 
             d.descripcion, 
-            d.precio, 
+            d.precio_unitario, 
             NULL, 
             'DELETE', 
             GETDATE(), 
